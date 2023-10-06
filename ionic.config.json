@@ -1,0 +1,7 @@
+{
+  "name": "pilatesbymary",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

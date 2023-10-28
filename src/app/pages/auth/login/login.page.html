@@ -1,0 +1,48 @@
+<!-- <ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content [fullscreen]="true">
+  <div>
+    <ion-img src="../../../../assets/images/splash.png">
+
+    </ion-img>
+  </div>
+  <div class="div-img">
+    <form [formGroup]="form" (ngSubmit)="login()">
+      <div>
+        <ion-input labelPlacement="stacked" label="Correo Electrónico" type="email" formControlName="email"></ion-input>
+      </div>
+
+      <div>
+        <ion-input labelPlacement="stacked" label="Contraseña" type="password" formControlName="password"></ion-input>
+      </div>
+      <div class="ion-text-center">
+        <button type="submit" class="btnTransparent" expand="full">
+          <h2>LOGIN</h2>
+        </button>
+      </div>
+    </form>
+
+    <div>
+      <ion-label>
+        Nuevo aqui?
+      </ion-label>
+      <a [routerLink]="['/signup']" routerLinkActive="router-link-active">
+        Crea una cuenta
+      </a>
+    </div>
+    <div class="svg-container">
+      <svg xmlns="http://www.w3.org/2000/svg" 
+      height="100%"
+      width="100%" viewBox="0 0 393 300" fill="none">
+        <path
+          d="M207 0L414.889 78.9347L501 269.5L414.889 460.065L207 539L-0.889389 460.065L-87 269.5L-0.889389 78.9347L207 0Z"
+          fill="#C8DBF7" />
+      </svg>
+
+    </div>
+  </div>
+</ion-content>

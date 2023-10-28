@@ -1,0 +1,103 @@
+html {
+    height: 100%;
+}
+ion-card{
+    width: 100%;
+}
+
+ion-grid {
+    height: inherit;
+}
+
+ion-col {
+    height: inherit;
+    text-align: center;
+}
+
+ion-segment-button::part(indicator-background) {
+    --color: #808FB0;
+    background: #FFF;
+}
+
+ion-segment {
+    background: #808FB0;
+}
+
+
+.segment-button-checked.md::part(native) {
+    color: #08a391 !important;
+}
+
+ion-segment-button {
+    height: 10vw;
+}
+
+ion-segment-button.md::part(indicator-background) {
+    height: 4px;
+}
+
+/* iOS styles */
+ion-segment-button.ios::part(native) {
+    color: #FFF;
+}
+
+.segment-button-checked.ios::part(native) {
+    color: #fff;
+}
+
+ion-segment-button.ios::part(indicator-background) {
+    border-radius: 20px;
+}
+
+.segmentdiv {
+    padding: 10px;
+}
+
+.body-dash {
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    flex-shrink: 0;
+    border-radius: 20px 20px 0px 0px;
+    background: #C8DBF7;
+    margin-top: -100px;
+}
+
+/* Estilos CSS para centrar svgclass-text */
+.svgclass-text {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #676767;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+/* Añade estos estilos para centrar el contenido dentro de .svgclass-text */
+.svgclass-text span {
+    font-size: 48px;
+    /* Tamaño de fuente deseado */
+    display: block;
+    /* Para que los elementos en línea se alineen verticalmente */
+}
+
+.svgclass-text label {
+    font-size: 24px;
+    /* Tamaño de fuente deseado */
+    display: block;
+    /* Para que los elementos en línea se alineen verticalmente */
+}
+
+.list-md {
+    margin-top: 100px;
+}
+
+.text-xs{
+    font-size: 10px;
+}
+ion-card-header{
+    padding-top: 0;
+}

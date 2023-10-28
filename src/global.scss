@@ -24,3 +24,13 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+
+
+.native-input.sc-ion-input-md{
+    background-color: #96A4BB;
+    border-radius: 3px;
+}
+.btnTransparent{
+    background-color: transparent!important;
+    color: #000;
+}

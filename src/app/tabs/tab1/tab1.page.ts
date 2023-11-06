@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CalendarEvent } from 'angular-calendar';
-import { sesiones } from '../models/sesiones.model';
+import { sesion } from '../../models/sesiones.model';
 
 @Component({
   selector: 'app-tab1',
@@ -20,16 +20,10 @@ export class Tab1Page {
   ];
   selectedDate: string = '';
   countClases: number = 0;
-  clases: Array<sesiones> = [];
+  clases: Array<sesion> = [];
 
-  constructor() {
-    this.clases.push({
-      clase: 'QABC',
-      fecha: new Date(),
-      instructor: 'MARY GARCIA',
-      tiempo: 50,
-    });
-  }
+  constructor() {}
+    
 
   onDateSelect(event: any) {
     this.selectedDate = event.format('YYYY-MM-DD');

@@ -1,0 +1,148 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <!-- <ion-buttons slot="start">
+      <ion-button> Start </ion-button>
+    </ion-buttons> -->
+    <ion-title>Registrar nuevos Usuarios</ion-title>
+    <ion-buttons slot="end">
+      <ion-button id="open-modal">
+        <ion-icon slot="icon-only" ios="add-circle-outline" md="add-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-progress-bar type="indeterminate" *ngIf="isConsulting"></ion-progress-bar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col>
+        <div class="ion-text-center">
+          <ion-datetime [min]="today" mode="ios" locale="es-MX" presentation="date" (ionChange)="SelDia($event)">
+
+          </ion-datetime>
+
+        </div>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-list [inset]="true" *ngFor="let sesion of Sesiones">
+          <ion-item [button]="true" detail="true">
+            <div class="unread-indicator-wrapper" slot="start">
+              <div class="unread-indicator"></div>
+            </div>
+            <ion-label>
+              <strong>{{sesion.clase}}</strong>
+              <ion-text></ion-text><br />
+              <ion-note color="medium" class="ion-text-wrap">
+                {{sesion.fecha.toDate() | date: 'dd-MM-yy' }}
+              </ion-note>
+            </ion-label>
+            <div class="metadata-end-wrapper" slot="end">
+              <ion-note color="medium">{{sesion.duracion}} minutos</ion-note>
+              <!-- <ion-icon color="medium" name="chevron-forward"></ion-icon> -->
+            </div>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div class="background">
+
+  </div>
+
+
+  <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)" 
+  (willPresent)="WillPresent($event)"> 
+    <ng-template>
+      <ion-content class="ion-padding">
+        <form [formGroup]="form" (ngSubmit)="confirm()">
+        <div class="modal-header ion-text-center">
+          <ion-icon class="larger" slot="start" name="calendar"></ion-icon>
+          <br><label>{{selDate| date: 'dd MMM yy'}}</label>
+        </div>
+        <ion-item> 
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <ion-input fill="" label="Nombre de la clase" labelPlacement="stacked" type="text" placeholder="PILATES"
+                    formControlName="clase" class="full-width"></ion-input>
+                  <div class="validation-error" *ngIf="form.get('clase').hasError('required') && form.get('clase').touched">
+                    El nombre de la clase es obligatorio.
+                  </div>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-input label="Total Asistentes" labelPlacement="stacked"
+                   min="0" type="number" placeholder="10"
+                    formControlName="total" class="full-width"></ion-input>
+                  <div class="validation-error" *ngIf="form.get('total').hasError('required') && form.get('total').touched">
+                    La cantidad de asistentes es obligatoria.
+                  </div>
+                  <div class="validation-error" *ngIf="form.get('total').hasError('min') && form.get('total').touched">
+                    La cantidad debe ser un número no negativo.
+                  </div>
+                </ion-col>
+                <ion-col></ion-col>
+                <ion-col>
+                  <ion-input label="Lista de espera" labelPlacement="stacked" min="0" type="number" 
+                  placeholder="5"
+                    formControlName="listaespera" class="full-width"></ion-input>
+                  <div class="validation-error" *ngIf="form.get('listaespera').hasError('required') && form.get('listaespera').touched">
+                    La lista de espera es obligatoria.
+                  </div>
+                  <div class="validation-error" *ngIf="form.get('listaespera').hasError('min') && form.get('listaespera').touched">
+                    el total de lista de espera debe ser un número no negativo.
+                  </div>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-input label="Hora" labelPlacement="stacked" min="0"
+                  type="time" placeholder="05:00"  
+                  [value]="today"
+                  formControlName="hora" class="full-width"></ion-input>
+                  <div class="validation-error" *ngIf="form.get('hora').hasError('required') && form.get('hora').touched">
+                    La hora es obligatoria.
+                  </div>
+                  <div class="validation-error" *ngIf="form.get('hora').hasError('min') && form.get('hora').touched">
+                    La hora debe ser un número no negativo.
+                  </div>
+                </ion-col>
+                <ion-col>
+                  <ion-input label="Duración" labelPlacement="stacked" min="0" type="number" placeholder="50"
+                    formControlName="duracion" class="full-width"></ion-input>
+                  <div class="validation-error" *ngIf="form.get('duracion').hasError('required') && form.get('duracion').touched">
+                    La duración es obligatoria.
+                  </div>
+                  <div class="validation-error" *ngIf="form.get('duracion').hasError('min') && form.get('duracion').touched">
+                    La duración debe ser un número no negativo.
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+        </ion-item>        
+      
+        <ion-footer style="position: absolute; bottom: 0; left: 0;">
+          <ion-header>
+            <ion-toolbar style="padding-right: 15px;">
+              <ion-buttons slot="center">
+                <ion-button color="danger" (click)="cancel()">Cancelar</ion-button>
+              </ion-buttons>
+              <ion-buttons slot="end">
+                <ion-button color="primary" type="submit">Programar</ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+        </ion-footer>
+    </form> 
+    </ion-content>
+     
+    </ng-template>
+  </ion-modal>
+ 
+</ion-content>

@@ -1,0 +1,85 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>class</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">class</ion-title>
+    </ion-toolbar>
+  </ion-header> -->
+
+  <ion-content [fullscreen]="true">
+    <div style="height: 100%;">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <h1>Bienvenida Mary</h1>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <div class="segmentdiv">
+              <ion-segment value="custom" mode="ios" (ionChange)="segmentChanged($event)">
+                <ion-segment-button value="custom">
+                  <ion-label>Dia</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="segment">
+                  <ion-label>Semana</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="buttons">
+                  <ion-label>Mes</ion-label>
+                </ion-segment-button>
+              </ion-segment>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <div class="svgclass-text"> 
+              <h3>Clases</h3>
+            </div> 
+            <div class="body-dash">
+              <ion-list>
+                <ion-item-sliding *ngFor="let clase of clases">
+                  <ion-item>
+                    <ion-card>
+                      <ion-grid>
+                        <ion-row>
+                          <ion-col>
+                            <div class="ion-text-left">
+                              <label>{{clase.fecha| date: 'hh:MM'}}</label><br>
+                              <label class="text-xs">({{clase.tiempo}} minutos)</label>
+                            </div>
+                          </ion-col>
+                          <ion-col size="8" class="ion-text-left"> <ion-card-header>
+  
+                              <ion-card-title>{{clase.clase}}</ion-card-title>
+                              <ion-card-subtitle>{{clase.instructor}}</ion-card-subtitle>
+                            </ion-card-header></ion-col>
+                          <ion-col>
+                            <div class="ion-text-right">
+                              {{clase.fecha| date: 'dd/MM/yy'}}
+                            </div>
+                          </ion-col>
+                        </ion-row>
+                      </ion-grid> 
+                      <ion-item-options>
+                        <ion-item-option color="danger">Cancelar</ion-item-option>
+                      </ion-item-options>
+                    </ion-card>
+                  </ion-item> 
+                </ion-item-sliding>  
+              </ion-list>
+            </div>
+          </ion-col> 
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ion-content>
+</ion-content>

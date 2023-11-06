@@ -1,7 +1,13 @@
 export interface User{
-    uid?: string
+    userid?: string
+    uid?:string
     name?: string
-    email:string
+    email?:string
     apellido?:string
-    password:string
+    password?:string
+    isAdmin?: boolean
+    fechainscripcion?:Date
+    fecharegistro?:Date
+    costoinscripcion?:number
+    totalclases?:number
 }

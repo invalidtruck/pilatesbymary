@@ -27,7 +27,10 @@ export class FirebaseService {
           fecharegistro: Date.now(),
           inscripcion: false,
           userid: data.user.uid,
-          admin: false,
+          isAdmin: false,
+          totalclases:0,
+          fechainscripcion:null,
+          
         });
         await data.user.sendEmailVerification();
 

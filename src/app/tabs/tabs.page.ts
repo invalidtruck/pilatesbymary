@@ -1,3 +1,4 @@
+import { UserService } from './../services/user.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -7,6 +8,9 @@ import { Component } from '@angular/core';
 })
 export class TabsPage {
 
-  constructor() {}
+  isAdmin:boolean= false;
+  constructor(private UserService: UserService) {
+    this.isAdmin = this.UserService.getUserInfo()?.isAdmin;
+  }
 
 }

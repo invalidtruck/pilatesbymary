@@ -9,7 +9,7 @@ import {
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
-
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -17,14 +17,16 @@ import { FirebaseService } from 'src/app/services/firebase.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  form: FormGroup= new FormGroup({
+  form: FormGroup = new FormGroup({
     email: new FormControl(''),
     password: new FormControl(''),
   });
 
+  Year: number = new Date().getFullYear();
   constructor(
     private router: Router,
     private auth: FirebaseService,
+    private userService: UserService,
     private fb: FormBuilder
   ) {}
 
@@ -37,23 +39,30 @@ export class LoginPage implements OnInit {
 
   async login() {
     if (!this.form.valid) return;
-  
-    const user: User ={
+
+    const user: User = {
       email: this.form.value.email,
-      password: this.form.value.password
-    }
+      password: this.form.value.password,
+    };
     try {
-      let data = await this.auth.login(user); 
-      if (data) this.router.navigate(['/tabs']);
+      let data = await this.auth.login(user);
+
+      if (data) {
+        await this.userService.getUser(data.user.uid).then((user:User)=>{
+        if(!user.isAdmin)
+          this.router.navigate(['tabs']);
+        else
+          this.router.navigate(['tabs/admin/class']);
+        
+        });
+        }
+     
     } catch (error) {
       // Manejar errores aquí si es necesario
     }
   }
-  
 
-
-  get f():{[key: string]:AbstractControl}{
-    return this.form.controls
+  get f(): { [key: string]: AbstractControl } {
+    return this.form.controls;
   }
-  
 }

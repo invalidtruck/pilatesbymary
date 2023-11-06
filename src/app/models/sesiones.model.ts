@@ -1,7 +1,16 @@
-export interface sesiones{
-    clase:string
-    fecha:Date
-    instructor: string
-    tiempo: number 
+import { DocumentReference } from "@angular/fire/compat/firestore"
+import { User } from "./user.model"
+
+export interface sesion{
+  uid?: string
+  alumnos?: Array<User>
+  total: number
+  fecha:Date
+  hora:Date
+  instructoruid: string
+  instructor?: DocumentReference
+  listaespera: number
+  clase: string
+  duracion: number
 }
 

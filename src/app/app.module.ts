@@ -11,6 +11,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
 import {AngularFireAuthModule} from '@angular/fire/compat/auth';
 import {AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { MaskitoModule } from '@maskito/angular';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,9 +21,17 @@ import {AngularFirestoreModule } from '@angular/fire/compat/firestore';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    MaskitoModule
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
+
+
+declare global {
+  interface Date {
+    toDate: () => Date;
+  }
+}

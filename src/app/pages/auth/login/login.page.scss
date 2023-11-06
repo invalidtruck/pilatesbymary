@@ -1,3 +1,7 @@
+form{
+    padding: 20px;
+}
+
 .svg-container {
     overflow-y: hidden;
     float: left;
@@ -8,10 +12,18 @@
     z-index: -1;
     margin-top: 30px;
     margin-bottom: 50px;
+    // justify-content: center;
+    // align-items: center;
+    // display: flex;
+    height: 50vh; 
+    background-image: url("../../../../assets/shapes.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .div-img {
-    margin: 40px 10px 35px 10px;
+    margin: 20% 10% 35% 10%;
 }
 
 :host {

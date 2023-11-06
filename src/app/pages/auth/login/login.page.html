@@ -24,25 +24,40 @@
           <h2>LOGIN</h2>
         </button>
       </div>
-    </form>
-
+    </form> 
     <div>
-      <ion-label>
-        Nuevo aqui?
-      </ion-label>
-      <a [routerLink]="['/signup']" routerLinkActive="router-link-active">
-        Crea una cuenta
-      </a>
-    </div>
-    <div class="svg-container">
-      <svg xmlns="http://www.w3.org/2000/svg" 
-      height="100%"
-      width="100%" viewBox="0 0 393 300" fill="none">
-        <path
-          d="M207 0L414.889 78.9347L501 269.5L414.889 460.065L207 539L-0.889389 460.065L-87 269.5L-0.889389 78.9347L207 0Z"
-          fill="#C8DBF7" />
-      </svg>
+      <ion-grid>
+        <ion-row>
+          <ion-col> <ion-label>
+              Nuevo aqui?
+            </ion-label>
+          </ion-col>
+          <ion-col>
+
+          </ion-col>
+
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-label>
+              <a [routerLink]="['/signup']" routerLinkActive="router-link-active">
+                Crea una cuenta
+              </a>
+            </ion-label>
+          </ion-col>
+          <ion-col>
+            <a [routerLink]="['/reset-password']" routerLinkActive="router-link-active">
+              Olvidaste tu Contraseña?
+            </a>
+          </ion-col>
+    
+        </ion-row>
+      </ion-grid>
 
     </div>
+
   </div>
+  <ion-footer class="ion-text-center">
+    Pilates by Mary {{Year}} app version 1.0
+  </ion-footer>
 </ion-content>

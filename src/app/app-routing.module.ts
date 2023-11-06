@@ -21,7 +21,12 @@ const routes: Routes = [
   {
     path: 'sign-out',
     loadChildren: () => import('./pages/auth/sign-out/sign-out.module').then( m => m.SignOutPageModule)
-  }
+  },
+  {
+    path: 'student-details',
+    loadChildren: () => import('./pages/admin/student-details/student-details.module').then( m => m.StudentDetailsPageModule)
+  },
+ 
 ];
 @NgModule({
   imports: [

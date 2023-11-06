@@ -4,7 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CustomInputComponent } from './components/custom-input/custom-input.component';
-
+import {MaskitoModule} from '@maskito/angular';
 
 
 @NgModule({
@@ -14,6 +14,7 @@ import { CustomInputComponent } from './components/custom-input/custom-input.com
     ReactiveFormsModule,
     RouterModule],
   imports: [
+    MaskitoModule,
     CommonModule,
     IonicModule,
     FormsModule,

@@ -13,22 +13,25 @@
   <div class="div-img">
     <form [formGroup]="form" (ngSubmit)="login()">
       <div>
-        <ion-input labelPlacement="stacked" label="Correo Electrónico" type="email" formControlName="email"></ion-input>
+        <ion-input class="input-email-password" labelPlacement="stacked" label="Correo Electrónico" type="email"  formControlName="email">
+      </ion-input>
       </div>
 
       <div>
-        <ion-input labelPlacement="stacked" label="Contraseña" type="password" formControlName="password"></ion-input>
+        <ion-input 
+        class="input-email-password" labelPlacement="stacked" label="Contraseña" type="password" formControlName="password"></ion-input>
       </div>
       <div class="ion-text-center">
         <button type="submit" class="btnTransparent" expand="full">
-          <h2>LOGIN</h2>
+          <h2 class="h2-login">LOGIN</h2>
         </button>
       </div>
     </form> 
     <div>
       <ion-grid>
         <ion-row>
-          <ion-col> <ion-label>
+          <ion-col> 
+            <ion-label class="signup-resetpassword">
               Nuevo aqui?
             </ion-label>
           </ion-col>
@@ -37,16 +40,16 @@
           </ion-col>
 
         </ion-row>
-        <ion-row>
+        <ion-row class="ionrow">
           <ion-col>
             <ion-label>
-              <a [routerLink]="['/signup']" routerLinkActive="router-link-active">
+              <a class="signup-resetpassword" [routerLink]="['/signup']" routerLinkActive="router-link-active">
                 Crea una cuenta
               </a>
             </ion-label>
           </ion-col>
           <ion-col>
-            <a [routerLink]="['/reset-password']" routerLinkActive="router-link-active">
+            <a class="signup-resetpassword" [routerLink]="['/reset-password']" routerLinkActive="router-link-active">
               Olvidaste tu Contraseña?
             </a>
           </ion-col>

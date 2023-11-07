@@ -29,3 +29,29 @@ form{
 :host {
     --background: transparent;
 }
+
+.ion-text-center{
+    font-size: 10px;
+}
+
+.input-email-password{
+    font-size: 15px;
+    color: #252525;
+}
+
+.h2-login{
+    font-size: 15px;
+    font-weight: bold;
+    color: #1E1E1E;
+}
+
+.signup-resetpassword{
+    font-size: 15px;
+    color: #1E1E1E;
+}
+
+.ionrow{
+    display: grid;
+    grid-template-columns: max-content max-content;
+    justify-content: space-between;
+}

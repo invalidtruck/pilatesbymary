@@ -1,30 +1,53 @@
-ion-progress-bar {
-    --background: #D1D1D1;
-    --progress-background: #A16100;
-    height:10px;
-    border-radius: 10px;
-  }
-  ion-progress-bar.progress{
-    border-radius: 10px!important;
-  }
-ion-card{
-    border-color: #808FB0;
-    
-    border-radius: 20px;
-    height: 400px;
+ion-grid {
+    ion-progress-bar {
+        --background: #D1D1D1;
+        --progress-background: #A16100;
+        height: 10px;
+        border-radius: 10px;
+    }
+
+    ion-progress-bar.progress {
+        border-radius: 10px !important;
+    }
+
+    ion-card {
+        border-color: #808FB0;
+
+        border-radius: 20px;
+        height: 400px;
+    }
+
+    ion-list {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    item-inner,
+    ion-item {
+        --border-style: none;
+        --color: #eeeeee;
+    }
+
+    ion-card-title,
+    ion-note,
+    ion-icon {
+        color: #eeeeee;
+    }
+
+    ion-list,
+    ion-item,
+    ion-card,
+    ion-card-header {
+        text-shadow: #111111 1p 1px;
+        --background: #6D80AB;
+        --color: #eeeeee;
+    }
 }
-ion-list{
-    padding-top: 0;
-    padding-bottom: 0;
-}
-item-inner,ion-item{
-    --border-style:none;--color:#eeeeee;
-}
-ion-card-title, ion-note,ion-icon{
-    color: #eeeeee;
-}
-ion-list, ion-item, ion-card, ion-card-header{
-    text-shadow: #111111 1p 1px;
-    --background:#6D80AB;
-    --color:#eeeeee;
+ion-input, input {
+    --width: 100%;
+} 
+
+.item-input.sc-ion-label-md-h, .item-input .sc-ion-label-md-h {
+    max-width: 100%;
+    width: 100%;
 }

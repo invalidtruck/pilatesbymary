@@ -5,47 +5,110 @@
 </ion-header> -->
 
 <ion-content [fullscreen]="true">
- <ion-grid fixed>
-  <ion-row>
-    <ion-col size="1"></ion-col>
-    <ion-col size="10" class="ion-text-center">
-      <h1>{{student.name+' '+ student.apellido}}</h1>
-    </ion-col>
-    <ion-col size="1"></ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col size="12">
-<ion-card>
-  <ion-card-header>
-    
-    <ion-card-title class="ion-text-center">Informaci&oacute;n</ion-card-title>
-  </ion-card-header>
-  <ion-card-content>
-    <ion-list>
-      <ion-item>
-        <ion-label name="inscripcion">Inscripci&oacute;n 
-          <br><ion-note>{{student.fechainscripcion | date:'dd/MM/yy'}}</ion-note>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="1"></ion-col>
+      <ion-col size="10" class="ion-text-center">
+        <h1>{{student.name+' '+ student.apellido}}</h1>
+      </ion-col>
+      <ion-col size="1"></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-card>
+          <ion-card-header>
 
-        </ion-label>
-        
-        <ion-toggle  [checked]="student.fechainscripcion!==null"></ion-toggle>
+            <ion-card-title class="ion-text-center">Informaci&oacute;n</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list>
+              <ion-item>
+                <ion-label name="inscripcion">Inscripci&oacute;n
+                  <br><ion-note>{{student.fechainscripcion | date:'dd/MM/yy'}}</ion-note>
 
-      </ion-item>
+                </ion-label>
 
-      <ion-item>
-        <ion-label>Sesiones
-          <br><ion-note>{{student.totalclases }} de {{ctotal}}</ion-note>
-        </ion-label> 
-      <ion-icon (click)="mostrarPaquetesModal()" slot="end" name="add-circle"></ion-icon>
-      </ion-item>
-      <ion-item>
-        <ion-progress-bar type="determinate"  [value]="ptotal"></ion-progress-bar>
-      </ion-item>
-    </ion-list>
-  </ion-card-content>
-</ion-card>
-    </ion-col>
-  </ion-row>
- </ion-grid>
+                <ion-toggle (ionChange)="toggleChange($event)" [checked]="esInscrito"></ion-toggle>
 
+
+              </ion-item>
+
+              <ion-item>
+                <ion-label>Sesiones
+                  <br><ion-note>{{student.totalclases }} de {{ctotal}}</ion-note>
+                </ion-label>
+                <ion-icon (click)="mostrarPaquetesModal()" slot="end" name="add-circle"></ion-icon>
+              </ion-item>
+              <ion-item>
+                <ion-progress-bar type="determinate" [value]="ptotal"></ion-progress-bar>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-modal (willDismiss)="onWillDismiss($event)">
+    <ng-template>
+      <!-- <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="cancel()">Cancel</ion-button>
+          </ion-buttons>
+          <ion-title></ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header> -->
+      <ion-content class="ion-padding">
+        <ion-header>
+          <ion-toolbar>
+            <ion-card-subtitle>Agregar Sesiones</ion-card-subtitle>
+            <ion-title>Paquetes</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-list>
+          <ion-item *ngFor="let paquete of paquetes">
+            <ion-label>{{paquete.sesiones}} {{paquete.sesiones == 1? 'Sesion':'Sesiones' }}</ion-label>
+            <ion-note slot="end">{{paquete.costo| currency}}</ion-note>
+          </ion-item>
+          <ion-item>
+            <ion-label>Custom</ion-label>
+            <ion-note slot="end">
+              <!-- Un input numérico personalizado para agregar sesiones -->
+              <ion-input type="number"></ion-input>
+            </ion-note>
+          </ion-item>
+        </ion-list>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle>Vigencia</ion-card-subtitle>
+            <!-- <ion-card-title>Vigencia</ion-card-title> -->
+          </ion-card-header>
+          <ion-card-content>
+            <ion-item>
+              <ion-label>{{(today)|date: 'dd/MM/yy'}}</ion-label>
+              <ion-icon slot="end" name="calendar"></ion-icon>
+              <!-- <ion-datetime-button datetime="fin"></ion-datetime-button> -->
+                <ion-modal [keepContentsMounted]="true">
+                  <ng-template>
+                    <ion-datetime id="fin" display-format="DD/MM/YYYY" display-mode="modal"
+                      [(ngModel)]="fechaFinal"></ion-datetime>
+                  </ng-template>
+                </ion-modal>
+                <ion-icon slot="end" name="calendar"></ion-icon>
+              </ion-item>
+            
+            <ion-item>
+              <ion-label>
+                <ion-input type="number" placeholder="$0.00" class="full-width"></ion-input>
+              </ion-label>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>

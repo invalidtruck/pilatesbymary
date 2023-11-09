@@ -1,0 +1,49 @@
+
+*{
+    font-family: 'Inter';
+}
+.create-account_content{
+    height: 100%;
+    width: 100%;
+}
+
+.create-account_title{
+    margin: 0;
+    padding:20% 0 10% 0;
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+//.create-account_form{}
+
+.create-account_form-content{
+    padding: 10px;
+    display: grid;
+    grid-template-rows: max-content;
+}
+
+.create-account_form-label{
+    font-size: 12px;
+}
+
+.create-account_form-input{
+    //width: 100%;
+    height: 38px;
+    background-color: #96A4BB;
+    border: none;
+    border-radius: 3px;
+}
+
+.create-account_button{
+    padding: 10px;
+    display: grid;
+    justify-content: end;
+}
+.create-account_button-button{
+    font-size: 20px;
+    font-weight: bold;
+    color: #000;
+    background: none;
+    border: none;
+}

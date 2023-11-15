@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './shared/auth.guard';
 
 const routes: Routes = [
   {
@@ -8,7 +9,8 @@ const routes: Routes = [
   },
   {
     path: 'tabs',
-    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
+    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'signup',
@@ -20,7 +22,8 @@ const routes: Routes = [
   },
   {
     path: 'sign-out',
-    loadChildren: () => import('./pages/auth/sign-out/sign-out.module').then( m => m.SignOutPageModule)
+    loadChildren: () => import('./pages/auth/sign-out/sign-out.module').then( m => m.SignOutPageModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'student-details',

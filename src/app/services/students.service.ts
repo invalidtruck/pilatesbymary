@@ -45,18 +45,19 @@ export class StudentsService {
   AddClasses() {}
   getAllClasses(userid: string) {
     return this.db
-      .collection('usuarios')
+      .collection<userPayment>('usuarios')
       .doc(userid)
       .collection('payments', (q) => q.where('vigencia', '>=', new Date()))
       .snapshotChanges()
       .pipe(
         map((actions) => {
           return actions.map((a) => {
-            let data = a.payload.doc.data() as userPayment;
+            const data = a.payload.doc.data() as userPayment;
             const uid = a.payload.doc.id; // Obtener el uid del documento
             return { uid, ...data };
           });
         })
       );
   }
+
 }

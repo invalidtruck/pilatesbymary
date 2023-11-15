@@ -1,3 +1,4 @@
+import { ToastController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
@@ -27,6 +28,7 @@ export class LoginPage implements OnInit {
     private router: Router,
     private auth: FirebaseService,
     private userService: UserService,
+    private toastController: ToastController,
     private fb: FormBuilder
   ) {}
 
@@ -58,10 +60,17 @@ export class LoginPage implements OnInit {
         }
      
     } catch (error) {
+      this.presentToast(error);
       // Manejar errores aquí si es necesario
     }
   }
-
+async presentToast(error:Error) {
+  const toast = await this.toastController.create({
+    message: error.message,
+    duration: 2000
+  });
+  toast.present();
+}
   get f(): { [key: string]: AbstractControl } {
     return this.form.controls;
   }

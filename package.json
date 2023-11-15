@@ -33,11 +33,11 @@
     "@maskito/angular": "^1.8.1",
     "@maskito/core": "^1.8.1",
     "angular-calendar": "^0.31.0",
+    "date-fns": "2.30.0",
     "firebase": "^10.5.2",
     "ion2-calendar": "^3.5.0",
     "ionic2-calendar": "^2.1.0",
     "ionicons": "^7.0.0",
-    "moment": "^2.29.4",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"

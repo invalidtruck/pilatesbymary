@@ -42,7 +42,7 @@ export class StudentDetailsPage implements OnInit {
     this.student = this.location.getState();
     this.esInscrito = this.student.fechainscripcion !== undefined;
     this.srv.getAllClasses(this.student.uid).subscribe((s) => {
-      this.ctotal = s.reduce((total, current) => total + current.sesiones, 0);
+      this.ctotal = s.reduce((total, current) => total + current.sesiones_restantes, 0);
       this.ptotal = this.student.totalclases / this.ctotal;
     });
 
@@ -89,7 +89,7 @@ export class StudentDetailsPage implements OnInit {
       fecharegistro: new Date(),
       costo:this.paqueteSel.costo,
       // paquete: paquete.uid,
-      sesiones: this.paqueteSel.sesiones,
+      sesiones_compradas: this.paqueteSel.sesiones,
       vigencia: new Date()
     });
     this.modal.dismiss(null, 'confirm');

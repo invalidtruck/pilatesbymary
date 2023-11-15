@@ -90,7 +90,6 @@
           <ion-card-content>
             <ion-item>
               <ion-label>{{(today)|date: 'dd/MM/yy'}}</ion-label>
-              <ion-icon slot="end" name="calendar"></ion-icon>
               <!-- <ion-datetime-button datetime="fin"></ion-datetime-button> -->
                 <ion-modal [keepContentsMounted]="true">
                   <ng-template>
@@ -98,7 +97,7 @@
                       [(ngModel)]="fechaFinal"></ion-datetime>
                   </ng-template>
                 </ion-modal>
-                <ion-icon slot="end" name="calendar"></ion-icon>
+                <ion-icon slot="end" datetime="fin" name="calendar"></ion-icon>
               </ion-item>
             
             <ion-item>

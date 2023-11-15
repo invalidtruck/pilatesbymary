@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Route, Router, RouterModule } from '@angular/router';
+import { FirebaseService } from 'src/app/services/firebase.service';
+
 
 @Component({
   selector: 'app-tab3',
@@ -7,6 +10,11 @@ import { Component } from '@angular/core';
 })
 export class Tab3Page {
 
-  constructor() {}
+  constructor(private auth:FirebaseService, private r:Router) {}
 
+  LogOut(){
+    this.auth.logOut().then(()=>{
+      this.r.navigate([""]);
+  });
+  }
 }

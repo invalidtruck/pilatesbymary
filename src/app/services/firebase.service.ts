@@ -12,6 +12,9 @@ export class FirebaseService {
   async login(user: User) {
     return this.auth.signInWithEmailAndPassword(user.email, user.password);
   }
+  logOut(){
+    return this.auth.signOut();
+  }
 
   async Create(user: User) {
     try {

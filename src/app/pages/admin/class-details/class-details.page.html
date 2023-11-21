@@ -1,0 +1,64 @@
+<ion-content [fullscreen]="true">
+
+  <div class="header ion-text-center">
+    <h1>Detalle</h1>
+    <ion-label>{{clase.fecha| date: 'dd/MM/yyyy'}}</ion-label>
+    <p>
+      <ion-title>{{clase.clase}}</ion-title>
+    </p>
+  </div>
+
+  <div *ngIf="registroClases.length == 0 && registrosEnEspera.length==0" class="ion-text-center">
+    <h3>Sin alumnos registrados</h3>
+  </div>
+
+  <!-- Lista de Registrados (estado "R") -->
+  <h5 class="ion-text-center" *ngIf="registroClases.length>0">
+    <ion-icon slot="start" name="people-sharp"></ion-icon>
+    Alumnos inscritos {{ registroClases.length + ' / ' + clase.total}}
+  </h5>
+  <ion-list *ngIf="registroClases.length>0">
+    <ion-item-sliding *ngFor="let registro of registroClases" (ionSwipe)="editarOpciones(registro)">
+      <ion-item>
+        <ion-label>
+          <label>{{ registro.userInfo?.name + ' ' + registro.userInfo?.apellido }}</label>
+        </ion-label>
+        <ion-badge color="success">Registrado</ion-badge>
+      </ion-item>
+      <ion-item-options side="start">
+        <ion-item-option color="primary" (click)="editarRegistro(registro)">
+          <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="eliminarRegistro(registro)">
+          <ion-icon slot="start" name="close-circle-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+
+  <!-- Lista de En espera (estado "E") -->
+  <h5 class="ion-text-center" *ngIf="registrosEnEspera.length>0">
+    <ion-icon slot="start" name="people-sharp"></ion-icon>
+    Lista de Espera  {{ registrosEnEspera.length + ' / ' + clase.listaespera}}
+  </h5>
+  <ion-list *ngIf="registrosEnEspera.length>0">
+    <ion-item-sliding *ngFor="let registro of registrosEnEspera" (ionSwipe)="editarOpciones(registro)">
+      <ion-item>
+        <ion-label>
+          {{ registro.userInfo?.name + ' ' + registro.userInfo?.apellido }}
+        </ion-label>
+        <ion-badge color="warning">En espera</ion-badge>
+      </ion-item>
+      <ion-item-options side="end">
+         
+        <ion-item-option color="success" (click)="eliminarRegistro(registro)">
+          <ion-icon slot="start" name="add-circle-sharp"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+</ion-content>

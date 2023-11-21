@@ -27,8 +27,19 @@ const routes: Routes = [
   },
   {
     path: 'student-details',
-    loadChildren: () => import('./pages/admin/student-details/student-details.module').then( m => m.StudentDetailsPageModule)
+    loadChildren: () => import('./pages/admin/student-details/student-details.module').then( m => m.StudentDetailsPageModule),
+  canActivate:[AuthGuard]
   },
+
+  {
+    path: 'clase-detalle',
+    loadChildren: () => import('./pages/admin/clase-detalle/clase-detalle.module').then( m => m.ClaseDetallePageModule),
+    canActivate:[AuthGuard]
+  },  {
+    path: 'class-details',
+    loadChildren: () => import('./pages/admin/class-details/class-details.module').then( m => m.ClassDetailsPageModule)
+  },
+
  
 ];
 @NgModule({

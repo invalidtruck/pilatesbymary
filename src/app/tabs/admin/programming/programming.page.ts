@@ -41,9 +41,7 @@ export class ProgrammingPage implements OnInit {
     this.form = this.fb.group({
       clase: new FormControl('', Validators.required),
       fecha: new FormControl(new Date()),
-      instructoruid: new FormControl(
-        this?.userService?.getUserInfo()?.userid, 
-      ),
+      instructoruid: new FormControl(this?.userService?.getUserInfo()?.userid),
       hora: new FormControl('', Validators.required),
       duracion: new FormControl('', Validators.required),
       listaespera: new FormControl('', Validators.required),
@@ -68,29 +66,31 @@ export class ProgrammingPage implements OnInit {
     this.form.reset();
   }
 
-   onWillDismiss(event: Event) {
-    const ev = event as CustomEvent<OverlayEventDetail<sesion>>;
-    if (ev.detail.role === 'confirm' && this.form.valid) {
-      let sesion = ev.detail.data;
-      sesion.instructoruid= this?.userService?.getUserInfo()?.userid;
-      sesion.fecha= new Date();
-      this.sesionService.Add(sesion).then(async (t) => {
-        const toast = await this.toastController.create({
-          header: 'Clase Añadida!',
-          // message: 'Clase Añadida!',
-          duration:3000,
-          buttons: [
-            {
-              icon: 'close',
-              htmlAttributes: {
-                'aria-label': 'close',
+  onWillDismiss(event: Event) {
+    try {
+      const ev = event as CustomEvent<OverlayEventDetail<sesion>>;
+      if (ev.detail.role === 'confirm' && this.form.valid) {
+        let sesion = ev.detail.data;
+        sesion.instructoruid = this?.userService?.getUserInfo()?.uid;
+        sesion.fecha = new Date();
+        this.sesionService.Add(sesion).then(async (t) => {
+          const toast = await this.toastController.create({
+            header: 'Clase Añadida!',
+            // message: 'Clase Añadida!',
+            duration: 3000,
+            buttons: [
+              {
+                icon: 'close',
+                htmlAttributes: {
+                  'aria-label': 'close',
+                },
               },
-            },
-          ],
+            ],
+          });
+          await toast.present();
         });
-        await toast.present(); 
-      });
-    }
+      }
+    } catch (error) {}
   }
   SelDia($event: any) {
     this.isConsulting = true;

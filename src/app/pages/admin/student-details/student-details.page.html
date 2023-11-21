@@ -35,7 +35,7 @@
 
               <ion-item>
                 <ion-label>Sesiones
-                  <br><ion-note>{{student.totalclases }} de {{ctotal}}</ion-note>
+                  <br><ion-note>{{ctotal }} de {{sesionesTotalesVigentes}}</ion-note>
                 </ion-label>
                 <ion-icon (click)="mostrarPaquetesModal()" slot="end" name="add-circle"></ion-icon>
               </ion-item>
@@ -62,52 +62,75 @@
           </ion-buttons>
         </ion-toolbar>
       </ion-header> -->
-      <ion-content class="ion-padding">
-        <ion-header>
-          <ion-toolbar>
-            <ion-card-subtitle>Agregar Sesiones</ion-card-subtitle>
-            <ion-title>Paquetes</ion-title>
-          </ion-toolbar>
-        </ion-header>
+      <ion-content class="ion-padding ion-text-center">
+        <h3> Agregar Sesiones</h3>
+        <ion-title>Paquetes</ion-title>
+
         <ion-list>
-          <ion-item *ngFor="let paquete of paquetes">
-            <ion-label>{{paquete.sesiones}} {{paquete.sesiones == 1? 'Sesion':'Sesiones' }}</ion-label>
-            <ion-note slot="end">{{paquete.costo| currency}}</ion-note>
-          </ion-item>
-          <ion-item>
-            <ion-label>Custom</ion-label>
-            <ion-note slot="end">
-              <!-- Un input numérico personalizado para agregar sesiones -->
-              <ion-input type="number"></ion-input>
-            </ion-note>
-          </ion-item>
+          <ion-radio-group [(ngModel)]="paqueteSel" name="auto" value="custom">
+            <ion-item (click)="paqueteSeleccionado(paquete)" *ngFor="let paquete of paquetes">
+
+              <ion-label>{{paquete.sesiones}} {{paquete.sesiones == 1? 'Sesion':'Sesiones' }}</ion-label>
+              <ion-note slot="end">{{paquete.costo| currency}}</ion-note>
+              <ion-radio slot="start" [value]="paquete" checked="checked"></ion-radio>
+            </ion-item>
+            <ion-item (click)="paqueteSeleccionado(null)">
+              <ion-label>Custom</ion-label>
+              <ion-input min="0" max="50" slot="end" [(ngModel)]="cSesiones" [label]="cSesiones >1? 'Sesiones':'Sesion'"
+                type="number"></ion-input>
+              <ion-radio slot="start" [value]="null"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
         </ion-list>
         <ion-card>
           <ion-card-header>
-            <ion-card-subtitle>Vigencia</ion-card-subtitle>
-            <!-- <ion-card-title>Vigencia</ion-card-title> -->
+            <ion-card-subtitle class="ion-text-start">Vigencia</ion-card-subtitle>
+
           </ion-card-header>
           <ion-card-content>
-            <ion-item>
-              <ion-label>{{(today)|date: 'dd/MM/yy'}}</ion-label>
-              <!-- <ion-datetime-button datetime="fin"></ion-datetime-button> -->
-                <ion-modal [keepContentsMounted]="true">
-                  <ng-template>
-                    <ion-datetime id="fin" display-format="DD/MM/YYYY" display-mode="modal"
-                      [(ngModel)]="fechaFinal"></ion-datetime>
-                  </ng-template>
-                </ion-modal>
-                <ion-icon slot="end" datetime="fin" name="calendar"></ion-icon>
-              </ion-item>
-            
-            <ion-item>
-              <ion-label>
-                <ion-input type="number" placeholder="$0.00" class="full-width"></ion-input>
-              </ion-label>
+            <ion-item datetime="fin">
+              <ion-label>Del</ion-label>
+
+              <ion-datetime-button presentation="date" preferWheel="false" datetime="ini"></ion-datetime-button>
+
+              <ion-modal [keepContentsMounted]="true">
+                <ng-template>
+                  <ion-datetime presentation="date" [(ngModel)]="fechaInicio" preferWheel="false"
+                    id="ini"></ion-datetime>
+                </ng-template>
+              </ion-modal>
+              <ion-label class="ion-text-center"> al </ion-label>
+              <ion-datetime-button datetime="fin" presentation="date" preferWheel="false"></ion-datetime-button>
+              <ion-modal [keepContentsMounted]="true">
+                <ng-template>
+                  <ion-datetime presentation="date" preferWheel="false" id="fin" display-format="DD/MM/YYYY"
+                    display-mode="modal" [(ngModel)]="fechaFinal"></ion-datetime>
+                </ng-template>
+              </ion-modal>
+              <ion-icon slot="end" name="calendar"></ion-icon>
+
+            </ion-item>
+
+            <ion-item *ngIf="paqueteSel==null">
+
+              <ion-input slot="end" type="number" class="ion-text-end" placeholder="$0.00"></ion-input>
+              <ion-icon name="card" slot="end"></ion-icon>
+
             </ion-item>
           </ion-card-content>
         </ion-card>
+        <footer class="ion-text-end">
+
+          <ion-button color="danger" (click)="cancel()" shape="square">
+            Cancelar
+          </ion-button>
+          <ion-button (click)="confirm()">
+            Agregar
+          </ion-button>
+
+        </footer>
       </ion-content>
     </ng-template>
   </ion-modal>
+
 </ion-content>

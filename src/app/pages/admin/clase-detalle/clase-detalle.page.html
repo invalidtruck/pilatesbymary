@@ -1,0 +1,44 @@
+<ion-content [fullscreen]="true" class="ion-text-center">
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="12" class="ion-text-uppercase">
+        <ion-icon slot="start" name="arrow-back-outline" color="primary"></ion-icon>
+        <h1>
+          {{clase.clase}}
+        </h1>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">{{clase.fecha|date: 'dd/MM/yy'}}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-note>({{clase.duracion}} min)</ion-note>
+        <h1> {{clase.hora}}</h1>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <div style="display: block; margin:0,auto;">
+          <span>
+            Nota: la cancelaci&oacute;n de la sesi&oacute;n debe ser como m&aacute;ximo una 1hr antes de iniciar
+          </span>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-button id="cancelar" color="danger" style="padding: 20px;">
+          Cancelar
+        </ion-button>
+        <ion-alert trigger="cancelar" header="Cancelar clase" [buttons]="alertButtons"
+          (didDismiss)="cancelar($event)"></ion-alert>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <h2>{{clase.instructor?.name + ' ' + clase.instructor?.apellido }}</h2>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

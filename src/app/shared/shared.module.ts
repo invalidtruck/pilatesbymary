@@ -4,8 +4,9 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CustomInputComponent } from './components/custom-input/custom-input.component';
-import {MaskitoModule} from '@maskito/angular';
+import { MaskitoModule } from '@maskito/angular';
 
+ 
 
 @NgModule({
   declarations: [CustomInputComponent],
@@ -19,7 +20,8 @@ import {MaskitoModule} from '@maskito/angular';
     IonicModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule
-  ]
+    RouterModule,  
+  ],
+  
 })
 export class SharedModule { }

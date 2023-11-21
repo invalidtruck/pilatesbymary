@@ -1,12 +1,15 @@
+import { forkJoin, map, of, switchMap } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { sesion } from '../models/sesiones.model';
-import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SesionesService {
+  
+
+
   constructor(private db: AngularFirestore) {}
   private collectionName = 'Sesiones';
 
@@ -29,6 +32,9 @@ export class SesionesService {
       )
       .valueChanges();
   }
+
+  
+
   Add(sesion: sesion) {
     let oSesion: any = sesion;
     oSesion.instructor = this.db.doc(`usuarios/${sesion.instructoruid}`).ref;
@@ -45,4 +51,5 @@ export class SesionesService {
       .doc(uid)
       .update(sesion);
   }
+  
 }

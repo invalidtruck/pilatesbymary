@@ -12,5 +12,10 @@ export interface sesion{
   listaespera: number
   clase: string
   duracion: number
+
+// PARA CONTABILIZAR ESTADO E Y R
+  enEspera?:number
+  registrado?:number
+  asistencia?:number
 }
 

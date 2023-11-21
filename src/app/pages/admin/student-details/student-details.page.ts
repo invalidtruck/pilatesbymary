@@ -4,11 +4,11 @@ import { User } from 'src/app/models/user.model';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { StudentsService } from 'src/app/services/students.service';
-import { IonModal } from '@ionic/angular';
+import { IonModal, ToastController } from '@ionic/angular';
 import { PackagesService } from 'src/app/services/packages.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { userPayment } from 'src/app/models/userPayment.model';
-
+import { MaskitoOptions, MaskitoElementPredicateAsync } from '@maskito/core';
 
 @Component({
   selector: 'app-student-details',
@@ -20,37 +20,71 @@ export class StudentDetailsPage implements OnInit {
   student: User;
   ctotal: number = 0;
   ptotal: number = 0;
+  sesionesTotalesVigentes: number=0;
   esInscrito: boolean;
-  today:Date= new Date();
+  today: Date = new Date();
 
   //modal Variables
-  fechaInicio: string;
-  fechaFinal: string;
+  fechaInicio: any = new Date().toISOString();
+  fechaFinal: any = this.getNewDate(50).toISOString();
   diferenciaDias: number;
-  paymentinfo: userPayment
+  paymentinfo: userPayment;
   paqueteSel: paquete;
   paquetes: paquete[];
+  cSesiones: number = 0;
+  readonly currency: MaskitoOptions = {
+    mask: [
+      '+',
+      '1',
+      ' ',
+      '(',
+      /\d/,
+      /\d/,
+      /\d/,
+      ')',
+      ' ',
+      /\d/,
+      /\d/,
+      /\d/,
+      '-',
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+    ],
+  };
+
+  readonly maskPredicate: MaskitoElementPredicateAsync = async (el) =>
+    (el as HTMLIonInputElement).getInputElement();
 
   constructor(
     private location: Location,
     private srv: StudentsService,
     private paqsrv: PackagesService,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private toastController: ToastController
   ) {}
 
   ngOnInit() {
     this.student = this.location.getState();
     this.esInscrito = this.student.fechainscripcion !== undefined;
     this.srv.getAllClasses(this.student.uid).subscribe((s) => {
-      this.ctotal = s.reduce((total, current) => total + current.sesiones_restantes, 0);
-      this.ptotal = this.student.totalclases / this.ctotal;
+      this.ctotal = s.reduce(
+        (total, current) => total + current.sesiones_restantes,
+        0
+      );
+      this.sesionesTotalesVigentes = s.reduce(
+        (total, current) => total + current.sesiones_compradas,
+        0
+      );
+      this.ptotal = this.ctotal / this.sesionesTotalesVigentes; // progressbar
     });
 
     this.paqsrv.list().subscribe((s) => {
       this.paquetes = s;
+      this.paqueteSel = s[0];
     });
   }
-
 
   toggleChange(event: any) {
     if (event.detail.checked) {
@@ -59,6 +93,10 @@ export class StudentDetailsPage implements OnInit {
       // Lógica cuando el toggle se desactiva
       this.esInscrito = false;
     }
+  }
+
+  paqueteSeleccionado(paquete: paquete) {
+    this.paqueteSel = paquete;
   }
 
   inscribir() {
@@ -80,19 +118,46 @@ export class StudentDetailsPage implements OnInit {
     this.modal.present();
   }
 
+  getNewDate(dias: number = 30) {
+    const fecha = new Date();
+    return new Date(
+      fecha.getFullYear(),
+      fecha.getMonth(),
+      fecha.getDate() + dias,
+      23,
+      59,
+      59
+    );
+  }
+
   cancel() {
     this.modal.dismiss(null, 'cancel');
   }
 
-  confirm() {
-    this.srv.Payment(this.student.uid, {
-      fecharegistro: new Date(),
-      costo:this.paqueteSel.costo,
-      // paquete: paquete.uid,
-      sesiones_compradas: this.paqueteSel.sesiones,
-      vigencia: new Date()
+  async confirm() {
+    try {
+      this.srv.Payment(this.student.uid, {
+        fecharegistro: new Date( this.fechaInicio),
+        costo: this.paqueteSel.costo,
+        // paquete: paquete.uid,
+        sesiones_compradas: this.paqueteSel.sesiones,
+        sesiones_restantes: this.paqueteSel.sesiones,
+        vigencia: new Date(this.fechaFinal),
+      });
+      await this.presentToast('se agregaron las sesiones!');
+
+      this.modal.dismiss(null, 'confirm');
+    } catch (error) {
+      this.presentToast(error);
+    }
+  }
+
+  async presentToast(mensaje: string) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: 2000,
     });
-    this.modal.dismiss(null, 'confirm');
+    await toast.present();
   }
 
   onWillDismiss(event: Event) {

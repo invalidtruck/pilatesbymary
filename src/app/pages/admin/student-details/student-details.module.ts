@@ -1,3 +1,4 @@
+import { SharedModule } from 'src/app/shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -13,6 +14,7 @@ import { StudentDetailsPage } from './student-details.page';
     CommonModule,
     FormsModule,
     IonicModule,
+    SharedModule,
     StudentDetailsPageRoutingModule
   ],
   declarations: [StudentDetailsPage]

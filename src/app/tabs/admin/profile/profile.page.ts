@@ -1,3 +1,4 @@
+import { FirebaseService } from 'src/app/services/firebase.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,10 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
+  constructor(private auth: FirebaseService) {}
 
-  constructor() { }
-
-  ngOnInit() {
+  ngOnInit() {}
+  LogOut() {
+    this.auth.logOut();
   }
-
 }

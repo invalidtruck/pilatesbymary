@@ -48,7 +48,7 @@ export class LoginPage implements OnInit {
     };
     try {
       let data = await this.auth.login(user);
-
+      
       if (data) {
         await this.userService.getUser(data.user.uid).then((user:User)=>{
         if(!user.isAdmin)

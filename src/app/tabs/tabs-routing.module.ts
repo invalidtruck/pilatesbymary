@@ -64,6 +64,7 @@ const routes: Routes = [
                 (m) => m.ProfilePageModule
               ),
           },
+
         ],
       },
       {

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "708384868228",
+    "project_id": "pilatesmary-9f30e",
+    "storage_bucket": "pilatesmary-9f30e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:708384868228:android:82dc3ade1b9da02a7effd1",
+        "android_client_info": {
+          "package_name": "com.invsys.pilatesbymary"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBStxLsjW3aJLhQkZrIrqYmkwHNDQYK5HI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:708384868228:android:acf78ecef71799bb7effd1",
+        "android_client_info": {
+          "package_name": "com.mycompany.pilatesbymary"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBStxLsjW3aJLhQkZrIrqYmkwHNDQYK5HI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

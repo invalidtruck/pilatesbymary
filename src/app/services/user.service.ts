@@ -13,9 +13,11 @@ export class UserService {
 
   async getUser(uid: string) {
     try {
-      const userDoc = await firstValueFrom(this.db.collection('usuarios',(ref)=> ref.where('userid','==', uid )).get())
-      if (userDoc.docs.length>0) {
-        this.user = userDoc.docs[0].data() as User;
+      const userDoc = (await firstValueFrom(this.db.collection('usuarios').doc(uid).get())).data() as User
+      // const userDoc = await firstValueFrom(this.db.collection('usuarios',(ref)=> ref.where('userid','==', uid )).get())
+      if (userDoc) {
+        this.user = userDoc;
+        this.user.uid = uid;
         return this.user;
       } else {
         this.user = null; // Usuario no encontrado
@@ -33,6 +35,12 @@ export class UserService {
   getUserInfo(): User {
     return this.user;
   }
+
+  
+  public get fullName() : string {
+    return `${this.user.name} ${this.user.apellido}`;
+  }
+  
 
   
 }

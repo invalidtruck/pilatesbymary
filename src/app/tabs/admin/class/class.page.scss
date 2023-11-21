@@ -1,0 +1,44 @@
+.slide-enter {
+    opacity: 0;
+    transform: translateY(20%);
+  }
+  
+  .slide-enter-active {
+    transition: opacity 300ms, transform 300ms;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .slide-up-exit {
+    opacity: 1;
+  }
+  
+  .slide-up-exit-active {
+    transition: opacity 300ms, transform 300ms;
+    opacity: 0;
+    transform: translateY(-20%);
+  }
+
+  .body-dash{
+    background-color: #C8DBF7;
+    height: 100%;
+    display: block;
+    border-radius: 20px 20px 0 0px;
+    flex: 1;
+  }
+
+  ion-list, ion-item, ion-item-sliding, ion-card,.item-native{
+    background-color: transparent;
+  }
+  ion-item{
+    border-radius: 10px;
+    margin: 5px;
+  }
+  ion-grid {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  ion-img{
+    margin: 33%;
+  }

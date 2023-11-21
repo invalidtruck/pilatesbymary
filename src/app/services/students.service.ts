@@ -44,10 +44,15 @@ export class StudentsService {
 
   AddClasses() {}
   getAllClasses(userid: string) {
+
+
+    let now = new Date();
+    now= new Date(now.getFullYear(), now.getMonth(), now.getDate(),0,0,0);
+
     return this.db
       .collection<userPayment>('usuarios')
       .doc(userid)
-      .collection('payments', (q) => q.where('vigencia', '>=', new Date()))
+      .collection('payment', (q) => q.where('vigencia', '>=', now))
       .snapshotChanges()
       .pipe(
         map((actions) => {

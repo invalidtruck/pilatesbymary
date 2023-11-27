@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { sesion } from '../models/sesiones.model';
-import { Observable, first, map, switchMap } from 'rxjs';
+import { Observable, firstValueFrom, map, switchMap } from 'rxjs';
 import { registroClases } from '../models/registroClases.models';
 import { User } from 'firebase/auth';
+import { updateDoc } from 'firebase/firestore/lite';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,7 @@ import { User } from 'firebase/auth';
 export class ClassesService {
   constructor(private db: AngularFirestore) {}
   private collectionName: string = 'Sesiones';
+  private registrocollectionName: string = 'Sesiones';
 
   misClases(
     uid: string,
@@ -38,14 +40,14 @@ export class ClassesService {
               const instructorData = instructorDoc.data();
 
               // Retorna el objeto combinando los datos de la sesión y del usuario
-              return {uid: id, ...data, instructor: instructorData };
+              return { uid: id, ...data, instructor: instructorData };
             })
           )
         )
       );
   }
 
-  obtenerRegistroClases(uid: string):Observable<any[]> {
+  obtenerRegistroClases(uid: string): Observable<any[]> {
     return this.db
       .collection('registroClases', (q) => q.where('idClase', '==', uid))
       .snapshotChanges()
@@ -64,6 +66,8 @@ export class ClassesService {
       );
   }
 
+
+
   async cancelar(uid: string) {
     try {
       await this.db.collection(this.collectionName).doc(uid).delete();
@@ -71,7 +75,7 @@ export class ClassesService {
       const batch = this.db.firestore.batch();
 
       const querySnapshot = await this.db
-        .collection('registroClases', (q) => q.where('idClase', '==', uid))
+        .collection(this.registrocollectionName, (q) => q.where('idClase', '==', uid))
         .get();
 
       querySnapshot.pipe(
@@ -87,4 +91,46 @@ export class ClassesService {
       console.error('Error al cancelar:', error);
     }
   }
+
+  async cambiarEstado(claseid: string, idusuario:String, estado:String) {
+    const docref = await this.db
+      .collection('registroClases', (q) =>
+        q.where('idClase', '==', claseid).where('idUsuario', '==', idusuario)
+      )
+      .get();
+
+    await docref.forEach((f) =>
+      f.docs.forEach((doc) => {
+        doc.ref.update({
+          estado: estado,
+        });
+      })
+    );
+  }
+
+  async EliminarDeClase(claseid: string, idusuario: string) {
+    try {
+      const querySnapshot = await firstValueFrom(
+        this.db.collection('registroClases',q=>q
+          .where('idClase', '==', claseid)
+          .where('idUsuario', '==', idusuario))
+          .get()
+          .pipe(
+            map(query => query.docs),
+          )
+      );
+  
+      if (querySnapshot.length > 0) {
+        for (const doc of querySnapshot) {
+          await doc.ref.delete();
+        }
+        console.log('Documento(s) eliminado(s) correctamente');
+      } else {
+        console.log('No se encontró ningún documento que cumpla con los criterios de búsqueda.');
+      }
+    } catch (error) {
+      console.error('Error al eliminar el documento:', error);
+    }
+  }
+  
 }

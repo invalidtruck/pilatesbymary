@@ -51,4 +51,65 @@
   <div class="background">
 
   </div>
+
+  <ion-modal (willDismiss)="onWillDismiss($event)">
+    <ng-template>
+      <!-- <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="cancel()">Cancel</ion-button>
+          </ion-buttons>
+          <ion-title></ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header> -->
+      <ion-content class="ion-padding ion-text-center">
+        <ion-grid fixed>
+          <ion-row>
+            <ion-col size="12" class="ion-text-uppercase">
+              <ion-icon slot="start" name="arrow-back-outline" color="primary"></ion-icon>
+              <h1>
+                {{SelClass.clase}}
+              </h1>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">{{SelClass.fecha|date: 'dd/MM/yy'}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-note>({{SelClass.duracion}} min)</ion-note>
+              <h1> {{SelClass.hora}}</h1>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <div style="display: block; margin:0,auto;">
+                <span>
+                  Nota: la cancelaci&oacute;n de la sesi&oacute;n debe ser como m&aacute;ximo una 1hr antes de iniciar
+                </span>
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-button id="cancelar" color="danger" style="padding: 20px;">
+                Cancelar
+              </ion-button>
+              <!-- <ion-alert trigger="cancelar" header="Cancelar clase" [buttons]="alertButtons"
+                (didDismiss)="cancelar($event)"></ion-alert> -->
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <!-- <h2>{{SelClass.instructor?.name + ' ' + SelClass.instructor?.apellido }}</h2> -->
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+  
 </ion-content>

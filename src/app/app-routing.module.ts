@@ -8,6 +8,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/auth/login/login.module').then( m => m.LoginPageModule)
   },
   {
+    path: 'login',
+    loadChildren: () => import('./pages/auth/login/login.module').then( m => m.LoginPageModule)
+  },
+  {
     path: 'tabs',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule),
     canActivate: [AuthGuard],
@@ -35,7 +39,8 @@ const routes: Routes = [
     path: 'clase-detalle',
     loadChildren: () => import('./pages/admin/clase-detalle/clase-detalle.module').then( m => m.ClaseDetallePageModule),
     canActivate:[AuthGuard]
-  },  {
+  },
+  {
     path: 'class-details',
     loadChildren: () => import('./pages/admin/class-details/class-details.module').then( m => m.ClassDetailsPageModule)
   },

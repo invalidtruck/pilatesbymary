@@ -82,4 +82,8 @@ export class FirebaseService {
       }
     });
   }
+
+  async  forgetPassword(email:string){
+    await this.auth.sendPasswordResetEmail(email);
+  }
 }

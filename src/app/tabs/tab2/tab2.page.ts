@@ -15,6 +15,7 @@ export class Tab2Page {
   date: string | undefined;
   type: 'string' | undefined; // 'string' | 'js-date' | 'moment' | 'time' | 'object'
   Sesiones:sesion[];
+  SelClass: sesion;
   constructor(
     private sesionService: SesionesService,
     private classSvc: ClassesService
@@ -37,4 +38,12 @@ export class Tab2Page {
     return data;
   }
   detalles(classuid: string) {}
+
+  cancelar($event){
+
+  }
+
+  onWillDismiss(event){
+
+  }
 }

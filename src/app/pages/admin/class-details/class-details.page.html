@@ -18,15 +18,21 @@
     Alumnos inscritos {{ registroClases.length + ' / ' + clase.total}}
   </h5>
   <ion-list *ngIf="registroClases.length>0">
-    <ion-item-sliding *ngFor="let registro of registroClases" (ionSwipe)="editarOpciones(registro)">
-      <ion-item>
+    <ion-item-sliding *ngFor="let registro of registroClases"
+     
+     >
+     <!-- (ionSwipe)="editarRegistro(registro,'A')" -->
+     <ion-item>
         <ion-label>
           <label>{{ registro.userInfo?.name + ' ' + registro.userInfo?.apellido }}</label>
         </ion-label>
-        <ion-badge color="success">Registrado</ion-badge>
+        <ion-badge color="primary" *ngIf="registro.estado === 'R';else asistencia">Registrado</ion-badge>
+        <ng-template #asistencia>
+          <ion-badge color="success">Asistencia</ion-badge>
+        </ng-template>
       </ion-item>
       <ion-item-options side="start">
-        <ion-item-option color="primary" (click)="editarRegistro(registro)">
+        <ion-item-option color="primary" (click)="editarRegistro(registro, 'A')">
           <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
         </ion-item-option>
       </ion-item-options>
@@ -45,7 +51,8 @@
     Lista de Espera  {{ registrosEnEspera.length + ' / ' + clase.listaespera}}
   </h5>
   <ion-list *ngIf="registrosEnEspera.length>0">
-    <ion-item-sliding *ngFor="let registro of registrosEnEspera" (ionSwipe)="editarOpciones(registro)">
+    <ion-item-sliding *ngFor="let registro of registrosEnEspera">
+    <!-- (ionSwipe)="editarRegistro(registro, 'R')"> -->
       <ion-item>
         <ion-label>
           {{ registro.userInfo?.name + ' ' + registro.userInfo?.apellido }}
@@ -54,7 +61,7 @@
       </ion-item>
       <ion-item-options side="end">
          
-        <ion-item-option color="success" (click)="eliminarRegistro(registro)">
+        <ion-item-option color="success" (click)="editarRegistro(registro,'R')">
           <ion-icon slot="start" name="add-circle-sharp"></ion-icon>
         </ion-item-option>
       </ion-item-options>

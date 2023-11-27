@@ -19,6 +19,22 @@
     transform: translateY(-20%);
   }
 
+  ion-segment{
+  background: #808FB0;
+  }
+
+  ion-label{
+    color: #fff;
+  }
+
+  .segmentChanged{
+    color: #000;
+  }
+  
+  .ion-text-center{
+    color: #7E7E7E;
+  }
+
   .body-dash{
     background-color: #C8DBF7;
     height: 100%;

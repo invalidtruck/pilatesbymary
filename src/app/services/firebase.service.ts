@@ -49,11 +49,11 @@ export class FirebaseService {
       if (data) {
         // if data send email confirm
         const newuser = await this.db.collection('usuarios').doc(data.user.uid).set({
-          nombre: user.name,
+          name: user.name,
           apellido: user.apellido,
-          fecharegistro: Date.now(),
-          inscripcion: false,
-          userid: data.user.uid,
+          fecharegistro: new Date(),
+          // inscripcion: false,
+          // userid: data.user.uid,
           isAdmin: false,
           totalclases: 0,
           fechainscripcion: null,

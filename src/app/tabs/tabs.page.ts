@@ -12,5 +12,8 @@ export class TabsPage {
   constructor(private UserService: UserService) {
     this.isAdmin = this.UserService.getUserInfo()?.isAdmin;
   }
-
+  tabChange($event)
+  {
+    
+  }
 }

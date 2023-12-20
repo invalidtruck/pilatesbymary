@@ -50,6 +50,21 @@ export class LoginPage implements OnInit {
       let data = await this.auth.login(user);
       
       if (data) {
+        //validar codigos de firebase
+        if (data.code == 'auth/invalid-login-credentials') {
+          this.presentToast(new Error('Usuario o contraseña incorrectos'));
+          return;
+        }
+        if (data.code == "auth/unverified-email") {
+          this.presentToast(new Error('la cuenta esta inactiva, favor de activarla con el correo de activación que llego a su bandeja'));
+          return;
+        }
+        if (data.code == 'auth/invalid-login-credentials') {
+          this.presentToast(new Error('Usuario o contraseña incorrectos'));
+          return;
+        }
+        
+          
         await this.userService.getUser(data.user.uid).then((user:User)=>{
         if(!user.isAdmin)
           this.router.navigate(['tabs']);

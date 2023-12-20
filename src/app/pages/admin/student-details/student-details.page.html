@@ -32,17 +32,42 @@
               </ion-item>
 
               <ion-item>
-                <ion-label>Sesiones
+                <ion-label *ngIf="sesionesTotalesVigentes!=0">Sesiones
                   <br><ion-note>{{ctotal }} de {{sesionesTotalesVigentes}}</ion-note>
                 </ion-label>
+                <ion-label *ngIf="sesionesTotalesVigentes==0">Agregar sesiones</ion-label>
                 <ion-icon (click)="mostrarPaquetesModal()" slot="end" name="add-circle"></ion-icon>
               </ion-item>
-              <ion-item>
+              <ion-item *ngIf="sesionesTotalesVigentes!=0">
                 <ion-progress-bar type="determinate" [value]="ptotal"></ion-progress-bar>
               </ion-item>
             </ion-list>
           </ion-card-content>
         </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-list class="custom-list" [inset]="true">
+          <ion-item *ngFor="let payment of payments " class="custom-item">
+            
+              <h2>{{ payment.fecharegistro | date: 'medium' }}</h2>
+              <ion-chip color="primary">
+                <ion-label>Vigencia</ion-label>
+                <ion-badge>{{ payment.vigencia | date: 'short' }}</ion-badge>
+              </ion-chip>
+              <ion-chip color="secondary">
+                <ion-label>Sesiones restantes</ion-label>
+                <ion-badge>{{ payment.sesiones_restantes }}</ion-badge>
+              </ion-chip>
+              <ion-chip color="tertiary">
+                <ion-label>Compradas</ion-label>
+                <ion-badge>{{ payment.sesiones_compradas }}</ion-badge>
+              </ion-chip>
+              <p class="cost">Costo: {{ payment.costo | currency:'USD':'symbol':'1.2-2' }}</p>
+            
+          </ion-item>
+        </ion-list>
       </ion-col>
     </ion-row>
   </ion-grid>

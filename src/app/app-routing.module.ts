@@ -43,7 +43,11 @@ const routes: Routes = [
   {
     path: 'class-details',
     loadChildren: () => import('./pages/admin/class-details/class-details.module').then( m => m.ClassDetailsPageModule)
+  },  {
+    path: 'usuarios',
+    loadChildren: () => import('./pages/admin/usuarios/usuarios.module').then( m => m.UsuariosPageModule)
   },
+
 
  
 ];

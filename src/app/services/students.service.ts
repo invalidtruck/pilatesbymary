@@ -10,10 +10,13 @@ import { map } from 'rxjs/operators';
 })
 export class StudentsService {
   constructor(private db: AngularFirestore) {}
+  paymentCollectionName= 'payment';
+  userCollectionName= 'usuarios';
+
 
   List() {
     return this.db
-      .collection<User>('usuarios', (q) => q.where('isAdmin', '!=', true))
+      .collection<User>(this.userCollectionName, (q) => q.where('isAdmin', '!=', true))
       .snapshotChanges()
       .pipe(
         map((actions) => {
@@ -29,16 +32,16 @@ export class StudentsService {
   }
 
   async Inscription(user: User) {
-    return await this.db.collection<User>('usuarios').doc(user.uid).update({
+    return await this.db.collection<User>(this.userCollectionName).doc(user.uid).update({
       fechainscripcion: user.fechainscripcion,
       costoinscripcion: user.costoinscripcion,
     });
   }
   Payment(uid: string, userPayment: userPayment) {
     return this.db
-      .collection('usuarios')
+      .collection(this.userCollectionName)
       .doc(uid)
-      .collection('payment')
+      .collection(this.paymentCollectionName)
       .add(userPayment);
   }
 
@@ -50,9 +53,9 @@ export class StudentsService {
     now= new Date(now.getFullYear(), now.getMonth(), now.getDate(),0,0,0);
 
     return this.db
-      .collection<userPayment>('usuarios')
+      .collection<userPayment>(this.userCollectionName)
       .doc(userid)
-      .collection('payment', (q) => q.where('vigencia', '>=', now))
+      .collection(this.paymentCollectionName, (q) => q.where('vigencia', '>=', now))
       .snapshotChanges()
       .pipe(
         map((actions) => {
@@ -64,5 +67,30 @@ export class StudentsService {
         })
       );
   }
+
+
+  getHistorial(uid:string,limit:number=5)
+  {
+    return this.db
+    .collection<userPayment>(this.userCollectionName)
+    .doc(uid)
+    .collection(this.paymentCollectionName, (q) => 
+                                                q.limit(limit)
+                                                 .orderBy("fecharegistro","desc"))
+    .snapshotChanges()
+    .pipe(
+      map((actions) => {
+        return actions.map((a) => {
+          let data = a.payload.doc.data() as userPayment;
+
+          data.fecharegistro= data.fecharegistro.toDate();
+          data.vigencia= data.vigencia.toDate();
+          const uid = a.payload.doc.id; // Obtener el uid del documento
+          return { uid, ...data };
+        });
+      })
+    );
+  }
+
 
 }

@@ -1,7 +1,7 @@
 {
   "name": "pilatesbymary",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
+  "version": "0.1.2",
+  "author": "David Silva",
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",

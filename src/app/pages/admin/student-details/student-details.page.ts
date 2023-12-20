@@ -8,7 +8,6 @@ import { IonModal, ToastController } from '@ionic/angular';
 import { PackagesService } from 'src/app/services/packages.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { userPayment } from 'src/app/models/userPayment.model';
-import { MaskitoOptions, MaskitoElementPredicateAsync } from '@maskito/core';
 
 @Component({
   selector: 'app-student-details',
@@ -20,7 +19,7 @@ export class StudentDetailsPage implements OnInit {
   student: User;
   ctotal: number = 0;
   ptotal: number = 0;
-  sesionesTotalesVigentes: number=0;
+  sesionesTotalesVigentes: number = 0;
   esInscrito: boolean;
   today: Date = new Date();
 
@@ -32,30 +31,8 @@ export class StudentDetailsPage implements OnInit {
   paqueteSel: paquete;
   paquetes: paquete[];
   cSesiones: number = 0;
-  readonly currency: MaskitoOptions = {
-    mask: [
-      '+',
-      '1',
-      ' ',
-      '(',
-      /\d/,
-      /\d/,
-      /\d/,
-      ')',
-      ' ',
-      /\d/,
-      /\d/,
-      /\d/,
-      '-',
-      /\d/,
-      /\d/,
-      /\d/,
-      /\d/,
-    ],
-  };
-
-  readonly maskPredicate: MaskitoElementPredicateAsync = async (el) =>
-    (el as HTMLIonInputElement).getInputElement();
+  payments: userPayment[];
+  limit: number = 5;
 
   constructor(
     private location: Location,
@@ -79,6 +56,10 @@ export class StudentDetailsPage implements OnInit {
       );
       this.ptotal = this.ctotal / this.sesionesTotalesVigentes; // progressbar
     });
+
+    // this.srv.getHistorial(this.student.uid, this.limit).subscribe((s) => {
+    //   this.payments = s;
+    // });
 
     this.paqsrv.list().subscribe((s) => {
       this.paquetes = s;
@@ -137,7 +118,7 @@ export class StudentDetailsPage implements OnInit {
   async confirm() {
     try {
       this.srv.Payment(this.student.uid, {
-        fecharegistro: new Date( this.fechaInicio),
+        fecharegistro: new Date(this.fechaInicio),
         costo: this.paqueteSel.costo,
         // paquete: paquete.uid,
         sesiones_compradas: this.paqueteSel.sesiones,

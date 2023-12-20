@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar animated="true" placeholder="busca estudiante" inputmode="text" type="search" color="medium"
+      (ionInput)="onSearchChange($event)" [debounce]="250" showCancelButton="always"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Estudiantes</ion-label>
+    </ion-list-header>
+    <ion-item button="true" *ngFor="let student of studentList" (click)="confirm(student)">
+      <ion-label>{{student.name + ' ' + student.apellido}}</ion-label>
+      <!-- <ion-radio [value]="student.uid"></ion-radio> -->
+    </ion-item>
+  </ion-list>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-button color="danger" (click)="cancel()" expand="block" fill="clear" shape="round">
+      Cancel
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

@@ -28,7 +28,7 @@
 
 </ng-container>
 <ng-template #usertabs>
-  <ion-tabs>
+  <ion-tabs (ionTabsDidChange)="tabChange($event)">
     <ion-tab-bar slot="bottom">
       <ion-tab-button tab="tab1" href="/tabs/tab1" layout="icon-top">
         <ion-icon aria-hidden="true" name="fitness-outline"></ion-icon>

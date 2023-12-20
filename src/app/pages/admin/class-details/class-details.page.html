@@ -4,19 +4,29 @@
     <h1>Detalle</h1>
     <ion-label>{{clase.fecha| date: 'dd/MM/yyyy'}}</ion-label>
     <p>
-      <ion-title>{{clase.clase}}</ion-title>
+      <ion-title>{{clase.clase}}</ion-title>    
+      <ion-icon 
+      *ngIf="clase.registrado < clase.total || clase.enEspera< clase.listaespera"
+      
+      slot="end" (click)="agregarRegistro()" name="add-circle-sharp"></ion-icon>
     </p>
   </div>
 
-  <div *ngIf="registroClases.length == 0 && registrosEnEspera.length==0" class="ion-text-center">
-    <h3>Sin alumnos registrados</h3>
+  <h5 class="ion-text-center" >
+    <ion-icon slot="start" name="people-sharp"></ion-icon>
+    Alumnos inscritos {{ registroClases.length + ' / ' + clase.total}}
+     
+  </h5>
+  <div *ngIf="isLoading" class="ion-text-center"> 
+    <ion-item>
+      <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+      <ion-skeleton-text [animated]="true" style="width: 20%;" slot="end"></ion-skeleton-text>
+    </ion-item>
+    
   </div>
 
   <!-- Lista de Registrados (estado "R") -->
-  <h5 class="ion-text-center" *ngIf="registroClases.length>0">
-    <ion-icon slot="start" name="people-sharp"></ion-icon>
-    Alumnos inscritos {{ registroClases.length + ' / ' + clase.total}}
-  </h5>
+ 
   <ion-list *ngIf="registroClases.length>0">
     <ion-item-sliding *ngFor="let registro of registroClases"
      
@@ -51,7 +61,7 @@
     Lista de Espera  {{ registrosEnEspera.length + ' / ' + clase.listaespera}}
   </h5>
   <ion-list *ngIf="registrosEnEspera.length>0">
-    <ion-item-sliding *ngFor="let registro of registrosEnEspera">
+    <ion-item-sliding *ngFor="let registro of registrosEnEspera" [disabled]="clase.total === clase.registrado">
     <!-- (ionSwipe)="editarRegistro(registro, 'R')"> -->
       <ion-item>
         <ion-label>

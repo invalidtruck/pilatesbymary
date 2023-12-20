@@ -36,19 +36,19 @@ export class FcmService {
 
       // On success, we should be able to receive notifications
       PushNotifications.addListener('registration', (token: Token) => {
-        alert('Push registration success, token: ' + token.value);
+        // alert('Push registration success, token: ' + token.value);
       });
 
       // Some issue with our setup and push will not work
       PushNotifications.addListener('registrationError', (error: any) => {
-        alert('Error on registration: ' + JSON.stringify(error));
+        // alert('Error on registration: ' + JSON.stringify(error));
       });
 
       // Show us the notification payload if the app is open on our device
       PushNotifications.addListener(
         'pushNotificationReceived',
         (notification: PushNotificationSchema) => {
-          alert('Push received: ' + JSON.stringify(notification));
+          // alert('Push received: ' + JSON.stringify(notification));
         }
       );
 
@@ -56,7 +56,7 @@ export class FcmService {
       PushNotifications.addListener(
         'pushNotificationActionPerformed',
         (notification: ActionPerformed) => {
-          alert('Push action performed: ' + JSON.stringify(notification));
+          // alert('Push action performed: ' + JSON.stringify(notification));
         }
       );
     }

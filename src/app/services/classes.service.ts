@@ -1,10 +1,10 @@
+import { User } from './../models/user.model';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { sesion } from '../models/sesiones.model';
 import { Observable, firstValueFrom, map, switchMap } from 'rxjs';
 import { registroClases } from '../models/registroClases.models';
-import { User } from 'firebase/auth';
-import { updateDoc } from 'firebase/firestore/lite';
+import {  increment } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -57,7 +57,7 @@ export class ClassesService {
             rclases.map(async (m) => {
               const id = m.payload.doc.id;
               let data = m.payload.doc.data() as registroClases;
-              const userDoc = await data.user.get();
+              const userDoc = await data.user?.get();
               const userData = userDoc.data();
               return { id, ...data, userInfo: userData };
             })
@@ -92,10 +92,10 @@ export class ClassesService {
     }
   }
 
-  async cambiarEstado(claseid: string, idusuario:String, estado:String) {
+  async cambiarEstado( idusuario:String, estado:String, clase:sesion) {
     const docref = await this.db
       .collection('registroClases', (q) =>
-        q.where('idClase', '==', claseid).where('idUsuario', '==', idusuario)
+        q.where('idClase', '==', clase.uid).where('idUsuario', '==', idusuario)
       )
       .get();
 
@@ -106,9 +106,15 @@ export class ClassesService {
         });
       })
     );
+
+    if (estado == 'R')
+      await this.db.doc(this.collectionName + '/' + clase.uid).update({
+        enEspera: clase.enEspera - 1,
+        registrado: increment(1),
+      });
   }
 
-  async EliminarDeClase(claseid: string, idusuario: string) {
+  async EliminarDeClase(claseid: string, idusuario: string, clase:sesion) {
     try {
       const querySnapshot = await firstValueFrom(
         this.db.collection('registroClases',q=>q
@@ -124,6 +130,10 @@ export class ClassesService {
         for (const doc of querySnapshot) {
           await doc.ref.delete();
         }
+        this.db
+          .doc(this.collectionName + '/' + claseid)
+          .update({ registrado: clase.registrado - 1 });
+
         console.log('Documento(s) eliminado(s) correctamente');
       } else {
         console.log('No se encontró ningún documento que cumpla con los criterios de búsqueda.');
@@ -132,5 +142,48 @@ export class ClassesService {
       console.error('Error al eliminar el documento:', error);
     }
   }
+  async AgregarAClase(claseid: string, usuario: User, estado: string = 'R') {
+    const userRef = this.db.doc("usuarios/" + usuario.uid).ref;
   
+    const docRef = await firstValueFrom( this.db.collection('registroClases', q=>q
+      .where("idUsuario", "==", usuario.uid)
+      .where("idClase", "==", claseid))
+      .get().pipe(map(query=>query.docs)));
+  
+    if (docRef.length==0) {
+      // No hay documento existente, crea uno nuevo
+      await this.db.collection('registroClases').doc().set({
+        estado,
+        fechaRegistro: new Date(),
+        fullname: `${usuario.name} ${usuario.apellido}`,
+        idClase: claseid,
+        idUsuario: usuario.uid,
+        user: userRef,
+      });
+      
+      if(estado =='R')
+        await this.db.doc(this.collectionName + "/" + claseid).update({registrado: increment(1)})
+      if(estado =='E')
+        await this.db.doc(this.collectionName + "/" + claseid).update({enEspera: increment(1)})
+      return true;
+    }
+    else return false  ;
+  }
+
+
+  // async AgregarAClase(claseid: string, usuario: User, estado: string ='R'){
+  //   const userRef= this.db.doc("usuarios/" + usuario.uid).ref;
+  //  await this.db.collection('registroClases', q=>
+  //   q.where("idUsuario", "==", usuario.uid)
+  //   .where("idClase", "==",claseid)
+  //  ).ref   
+  //  .add({
+  //     estado: estado,
+  //     fechaRegistro: new Date(),
+  //     fullname : `${usuario.name} ${usuario.apellido}`,
+  //     idClase:claseid,
+  //     idUsuario: usuario.uid,
+  //     user: userRef
+  //   });
+  // }
 }
